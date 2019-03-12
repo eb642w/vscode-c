@@ -1,0 +1,10 @@
+if((in=fopen("in.txt","r"))==NULL)
+	{
+		printf("Can't open in.txt!");
+		return;
+	}
+	fclose(in);
+endif
+if
+if
+endif
