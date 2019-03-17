@@ -11,7 +11,7 @@
 char posture_str[1000],tmp[100];
 int num[1000], k = 0, ans = 0;
 //除法运算
-int divi(int num, char num_str[])
+int division(int num, char num_str[])
 {
     return (num / atoi(num_str));
 }
@@ -32,7 +32,7 @@ void cut(char s[])
             }
             else
             {
-                num[j] = divi(num[j - 1], tmp);
+                num[j] = division(num[j - 1], tmp);
                 j++;
                 num[j - 2] = 0;
             }
@@ -48,7 +48,7 @@ void cut(char s[])
             }
             else
             {
-                num[j] = divi(num[j - 1], tmp);
+                num[j] = division(num[j - 1], tmp);
                 j++;
                 num[j - 2] = 0;
             }
@@ -64,7 +64,7 @@ void cut(char s[])
             }
             else
             {
-                num[j] = divi(num[j - 1], tmp);
+                num[j] = division(num[j - 1], tmp);
                 j++;
                 num[j - 2] = 0;
             }
@@ -81,7 +81,7 @@ void cut(char s[])
             }
             else
             {
-                num[j] = divi(num[j - 1], tmp);
+                num[j] = division(num[j - 1], tmp);
                 j++;
                 num[j - 2] = 0;
             }
@@ -97,7 +97,7 @@ void cut(char s[])
             }
             else
             {
-                num[j] = divi(num[j - 1], tmp);
+                num[j] = division(num[j - 1], tmp);
                 j++;
                 num[j - 2] = 0;
             }
