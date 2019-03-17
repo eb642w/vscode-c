@@ -5,8 +5,9 @@
 
 int main()
 {
-    double n=1.2312345;
-    printf("%8.4lf\n",n);
+    int n=1;
+    printf("%d\n",n);
+    fwrite(&n,sizeof(int),1,stdout);
     system("pause");
     return 0;
 }
