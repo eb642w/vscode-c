@@ -24,8 +24,8 @@ tb t[100];
 int main()
 {
 	int n, i, j, count = 0;
-	char a = 'z' + 1, nstr[2];
-	nstr[0] = a;
+	char a = 'z' + 1, replace_str[2];
+	replace_str[0] = a;
 	scanf("%d", &n);
 	for (i = 0; i < n; i++)
 		scanf("%s %lld", t[i].name, &t[i].num);
@@ -34,10 +34,10 @@ int main()
 		for (j = i + 1; j < n; j++)
 			if (strcmp(t[i].name, t[j].name) == 0)
 			{
-				if (strcmp(t[i].name, nstr) == 0)
+				if (strcmp(t[i].name, replace_str) == 0)
 					continue;
 				else if (t[i].num == t[j].num)
-					strcpy(t[j].name, nstr);
+					strcpy(t[j].name, replace_str);
 				else
 				{
 					count++;
@@ -49,7 +49,7 @@ int main()
 	qsort(t, n, sizeof(t[0]), cmp);
 	for (i = 0; i < n; i++)
 	{
-		if (strcmp(t[i].name, nstr) == 0)
+		if (strcmp(t[i].name, replace_str) == 0)
 			break;
 		else
 			printf("%s %lld\n", t[i].name, t[i].num);

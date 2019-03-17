@@ -126,7 +126,7 @@ void del()
     qsort(b, bi_len, sizeof(b[0]), cmp);
     bi_len -= count;
 }
-int towork(FILE *from,FILE *to)
+int to_work(FILE *from,FILE *to)
 {
     int func;
     scanf("%d",&func);
@@ -140,17 +140,17 @@ int towork(FILE *from,FILE *to)
     else if (func == 1)
     {
         insert();
-        towork(from,to);
+        to_work(from,to);
     }
     else if (func == 2)
     {
         search();
-        towork(from,to);
+        to_work(from,to);
     }
     else if (func == 3)
     {
         del();
-        towork(from,to);
+        to_work(from,to);
     }
 }
 int main()
@@ -160,6 +160,6 @@ int main()
     fread(tmp, sizeof(char), 5000, bk);
     puts(tmp);
     cut(tmp);
-    towork(bk,od);
+    to_work(bk,od);
     return 0;
 }
