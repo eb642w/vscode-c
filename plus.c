@@ -81,10 +81,10 @@ int main()
                 num_b[i]=num_b[i];
             }
         }
-        if(num_b[strlen(num_b)-1]=='0')
-            num_b[strlen(num_b)-1]='\0';
         reverse(num_b);
-        puts(num_b);
+        int i;
+        for(i=0;i<strlen(num_b)-1 && num_b[i]=='0';i++){}
+        puts(&num_b[i]);
     }
     system("pause");
     return 0;
