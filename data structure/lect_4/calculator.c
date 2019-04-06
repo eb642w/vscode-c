@@ -152,6 +152,7 @@ int main()
         stack[stack_top] = '\0';
         stack_top--;
     }
+    puts(final_expression);
     for (i = 0; final_expression[i] != '\0'; i++)
     {
         int j = i, num = 0;
