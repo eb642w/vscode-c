@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#define in_max 100000
+#define in_max 100
 #define MAX 26
 
 int length_1, length_2;
@@ -29,7 +29,7 @@ void segment(int mode, char *s, int num, int sum);
 void insert(char *word);
 void Read(FILE *from, int length, int mode);
 int search(char *word);
-void Add(char *word, int pos);
+void Add(char *word, int pos, int judge);
 
 int main()
 {
@@ -51,7 +51,7 @@ int main()
         for (v = 0; v < get->times - 1; v++)
             fprintf(out, "%d ", get->position[v]);
         fprintf(out, "%d\n", get->position[get->times - 1]);
-        get=get->next;
+        get = get->next;
     }
     File_close();
     system("pause");
@@ -168,19 +168,19 @@ void segment(int mode, char *s, int num, int sum)
         p = 0;
         if (strchr(s, ' ') == s)
         {
-            Add(temp, sum - strlen(temp));
+            Add(temp, sum - strlen(temp), 1);
             memset(temp, '\0', strlen(temp));
             p++;
         }
         else
         {
-            int y=strlen(temp);
+            int y = strlen(temp);
             p = strchr(s, ' ') - s + 1;
             strncat(temp, s, p - 1);
-            Add(temp, sum - y); 
+            Add(temp, sum - y, 1);
             memset(temp, '\0', strlen(temp));
         }
-        if (s[num - 1] != ' ' && strrchr(s, ' ')!=NULL)
+        if (s[num - 1] != ' ' && strrchr(s, ' ') != NULL)
         {
             int flag = strrchr(s, ' ') - s + 1;
             strcpy(temp, &s[flag]);
@@ -190,7 +190,7 @@ void segment(int mode, char *s, int num, int sum)
         {
             int len = strchr(&s[p], ' ') - &s[p];
             strncpy(tmp, &s[p], len);
-            Add(tmp, sum + p);
+            Add(tmp, sum + p, 1);
             memset(tmp, '\0', strlen(tmp));
             p += len + 1;
         }
@@ -222,7 +222,7 @@ void Read(FILE *from, int length, int mode)
             p += len + 1;
             cut++;
         }
-        strcat(real,&in[p]);
+        strcat(real, &in[p]);
         segment(mode, real, in_num - cut, sum);
         sum += in_num - cut;
         memset(real, '\0', strlen(real));
@@ -246,35 +246,48 @@ int search(char *word)
     }
     return (p != NULL && p->sign == 1);
 }
-void Add(char *word, int pos)
+void Add(char *word, int pos, int judge)
 {
     if (*word == '\0')
         return;
-    int i;
-    for (i = 0; i < strlen(word); i++)
+    if (judge == 1)
     {
-        if (word[i] >= 'A' && word[i] <= 'Z')
-            word[i] += 'a' - 'A';
-        else if ((word[i] < 'a' || word[i] > 'z') && i < strlen(word) - 1)
-            return;
-        else if ((word[i] < 'a' || word[i] > 'z') && i == strlen(word) - 1)
-            word[i] = '\0';
-    }
-    if (search(word) == -1 || search(word) == 1)
+        int i;
+        for (i = 0; i < strlen(word); i++)
+        {
+            if (word[i] >= 'A' && word[i] <= 'Z')
+                word[i] += 'a' - 'A';
+            else if ((word[i] < 'a' || word[i] > 'z'))
+                word[i] = ' ';
+        }
+        word[strlen(word)] = ' ';
+        word[strlen(word)] = '\0';
+        int d = 0;
+        char Temp[100];
+        memset(Temp, '\0', sizeof(Temp));
+        while (strchr(&word[d], ' ') != NULL)
+        {
+            int len = strchr(&word[d], ' ') - &word[d];
+            strncpy(Temp, &word[d], len);
+            Add(Temp, pos + d, 0);
+            memset(Temp, '\0', strlen(Temp));
+            d += len + 1;
+        }
         return;
-    else
+    }
+    if (search(word) == 0)
     {
         note *now = head;
         while (now)
         {
             if (strcmp(now->word, word) == 0 || now->times == 0)
             {
-                if(now->times == 0)
+                if (now->times == 0)
                 {
-                    now->times=1;
-                    strcpy(now->word,word);
-                    now->position=(int *)malloc(sizeof(int));
-                    now->position[0]=pos;
+                    now->times = 1;
+                    strcpy(now->word, word);
+                    now->position = (int *)malloc(sizeof(int));
+                    now->position[0] = pos;
                     break;
                 }
                 now->times++;
@@ -283,7 +296,7 @@ void Add(char *word, int pos)
                 else
                     now->position = (int *)realloc(now->position, now->times * sizeof(int));
                 now->position[now->times - 1] = pos;
-                if (now->front != NULL && (now->times > now->front->times || (now->times == now->front->times && strcmp(now->word, now->front->word) < 0)))
+                while (now->front != NULL && (now->times > now->front->times || (now->times == now->front->times && strcmp(now->word, now->front->word) < 0)))
                 {
                     if (now->front->front != NULL)
                     {
@@ -298,9 +311,9 @@ void Add(char *word, int pos)
                     f->next = now->next;
                     now->next = f;
                     f->front = now;
-                    if(f==head)
+                    if (f == head)
                     {
-                        head=now;
+                        head = now;
                     }
                 }
                 break;
