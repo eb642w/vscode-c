@@ -47,11 +47,23 @@ void Insert(int p, char s[])
 }
 void del(int p, int num)
 {
+    // memset(temp, '\0', sizeof(temp));
+    // if (p + num > strlen(text))
+    //     num = strlen(text) - p;
+    // strncpy(temp, &text[p], num);
+    // strcpy(&text[p], &text[p + num]);
+    int i=p,j;
     memset(temp, '\0', sizeof(temp));
-    if (p + num > strlen(text))
-        num = strlen(text) - p;
-    strncpy(temp, &text[p], num);
-    strcpy(&text[p], &text[p + num]);
+    for(j=0;j<num;j++)
+    {
+        temp[j]=text[i];
+        i++;
+    }
+    temp[j]='\0';
+    for(j=p;j<strlen(text);j++)
+    {
+        text[j]=text[j+num];
+    }
 }
 void Take()
 {
@@ -99,7 +111,7 @@ int main()
             scanf("%d %s", &p, s);
             Insert(p, s);
             Add(c, p, s);
-            //puts(text);
+            // puts(text);
         }
         else if (c == 2)
         {
@@ -107,12 +119,12 @@ int main()
             scanf("%d %d", &p, &num);
             del(p, num);
             Add(c, p, temp);
-            //puts(text);
+            // puts(text);
         }
         else if (c == 3)
         {
             Take();
-            //puts(text);
+            // puts(text);
         }
     }
     printf("%s",text);

@@ -5,8 +5,8 @@
 #define in_max 100
 #define MAX 26
 
-int length_1, length_2, out_count = 0;
-char in[in_max + 1], real[in_max + 1], temp[100], tmp[100], o[150000], n[10];
+int length_1, length_2;
+char in[in_max + 1], real[in_max + 1], temp[100], tmp[100], n[10];
 FILE *Dict, *article, *out;
 typedef struct Trie
 {
@@ -40,12 +40,40 @@ int main()
     note *get = head;
     while (get)
     {
-
         int v;
-        fprintf(out, "%s %d ", get->word, get->times);
-        for (v = 0; v < get->times - 1; v++)
-            fprintf(out, "%d ", get->position[v]);
-        fprintf(out, "%d\n", get->position[v]);
+        get->word[strlen(get->word) + 1] = '\0';
+        get->word[strlen(get->word)] = ' ';
+        fwrite(get->word, sizeof(char), strlen(get->word), out);
+        int py = get->times, x = 0;
+        while (py != 0)
+        {
+            n[x] = py % 10 + '0';
+            x++;
+            py /= 10;
+        }
+        n[x] = '\0';
+        reverse(n);
+        n[x + 1] = '\0';
+        n[x] = ' ';
+        fwrite(n, sizeof(char), strlen(n), out);
+        for (v = 0; v <= get->times - 1; v++)
+        {
+            int w = 0;
+            while (get->position[v] != 0)
+            {
+                n[w] = get->position[v] % 10 + '0';
+                w++;
+                get->position[v] /= 10;
+            }
+            n[w] = '\0';
+            reverse(n);
+            n[w + 1] = '\0';
+            if (v < get->times - 1)
+                n[w] = ' ';
+            else
+                n[w] = '\n';
+            fwrite(n, sizeof(char), strlen(n), out);
+        }
         get = get->next;
     }
     File_close();
