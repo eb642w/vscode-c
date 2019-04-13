@@ -1,3 +1,8 @@
+/*
+作业次数：第三次作业
+文件名：word_frequency_statistics.c
+题目：词频统计
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

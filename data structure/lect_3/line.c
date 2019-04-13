@@ -1,3 +1,8 @@
+/*
+作业次数：第三次作业
+文件名：line.c
+题目：连续线段
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

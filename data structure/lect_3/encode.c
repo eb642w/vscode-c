@@ -1,3 +1,8 @@
+/*
+作业次数：第三次作业
+文件名：encode.c
+题目：文件加密（环）
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

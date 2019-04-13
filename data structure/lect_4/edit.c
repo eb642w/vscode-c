@@ -1,3 +1,8 @@
+/*
+作业次数：第四次作业
+文件名：edit.c
+题目：文本编辑操作模拟
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

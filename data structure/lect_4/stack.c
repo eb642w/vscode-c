@@ -1,3 +1,8 @@
+/*
+作业次数：第四次作业
+文件名：stack.c
+题目：栈操作
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

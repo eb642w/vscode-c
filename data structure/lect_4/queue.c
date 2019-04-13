@@ -1,3 +1,8 @@
+/*
+作业次数：第四次作业
+文件名：queue.c
+题目：银行排队模拟
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

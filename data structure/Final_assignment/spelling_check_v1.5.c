@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #define in_max 425
 #define MAX 26
 
 int length_1, length_2, out_count = 0;
-long t1,t2;
-char in[in_max + 1], real[in_max + 1], temp[100], tmp[100], o[150000], n[10];
+char in[in_max + 1], real[in_max + 1], temp[100], tmp[100];
 FILE *Dict, *article, *out;
 typedef struct Trie
 {
@@ -35,14 +33,10 @@ void Add(char *word, int pos, int judge);
 
 int main()
 {
-    t1=clock();
     Init();
     Read(Dict, length_1, 1);
     Read(article, length_2, 2);
     note *get = head;
-    t2=clock();
-    while(t2-t1<=5000)
-        t2=clock();
     while (get)
     {
 
@@ -240,14 +234,6 @@ void Read(FILE *from, int length, int mode)
 }
 int search(char *word)
 {
-    int i;
-    for (i = 0; i < strlen(word); i++)
-    {
-        if (word[i] >= 'A' && word[i] <= 'Z')
-            word[i] += 'a' - 'A';
-        else if (word[i] < 'a' || word[i] > 'z')
-            return -1;
-    }
     trie *p = root;
     while (p != NULL && *word != '\0')
     {

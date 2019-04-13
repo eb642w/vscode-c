@@ -1,3 +1,8 @@
+/*
+作业次数：第四次作业
+文件名：calculator.c
+题目：计算器
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

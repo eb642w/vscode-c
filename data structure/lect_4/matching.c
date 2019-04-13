@@ -1,3 +1,8 @@
+/*
+作业次数：第四次作业
+文件名：matching.c
+题目：C程序括号匹配检查
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

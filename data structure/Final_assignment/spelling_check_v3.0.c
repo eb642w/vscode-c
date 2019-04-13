@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#define in_max 100
+#define in_max 412
 #define MAX 26
 
 int length_1, length_2;
-char in[in_max + 1], real[in_max + 1], temp[100], tmp[100], n[10];
+char in[in_max + 1], real[in_max + 1], temp[70], tmp[70], n[10];
 FILE *Dict, *article, *out;
 typedef struct Trie
 {
@@ -15,7 +15,7 @@ typedef struct Trie
 } trie;
 typedef struct note
 {
-    char word[100];
+    char word[70];
     int *position;
     int times;
     struct note *front, *next;
@@ -263,14 +263,6 @@ void Read(FILE *from, int length, int mode)
 }
 int search(char *word)
 {
-    int i;
-    for (i = 0; i < strlen(word); i++)
-    {
-        if (word[i] >= 'A' && word[i] <= 'Z')
-            word[i] += 'a' - 'A';
-        else if (word[i] < 'a' || word[i] > 'z')
-            return -1;
-    }
     trie *p = root;
     while (p != NULL && *word != '\0')
     {
@@ -296,7 +288,7 @@ void Add(char *word, int pos, int judge)
         word[strlen(word)] = ' ';
         word[strlen(word)] = '\0';
         int d = 0;
-        char Temp[100];
+        char Temp[70];
         memset(Temp, '\0', sizeof(Temp));
         while (strchr(&word[d], ' ') != NULL)
         {

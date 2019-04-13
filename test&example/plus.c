@@ -48,10 +48,10 @@ void up(char *s)
 
 int main()
 {
-    int n;
-    scanf("%d",&n);
-    while(n--)
-    {
+    // int n;
+    // scanf("%d",&n);
+    // while(n--)
+    // {
         scanf("%s %s",num_a,num_b);
         reverse(num_a);
         reverse(num_b);
@@ -85,7 +85,7 @@ int main()
         int i;
         for(i=0;i<strlen(num_b)-1 && num_b[i]=='0';i++){}
         puts(&num_b[i]);
-    }
+    // }
     system("pause");
     return 0;
 }

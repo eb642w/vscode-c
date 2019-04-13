@@ -1,3 +1,8 @@
+/*
+作业次数：第三次作业
+文件名：multi.c
+题目：多项式相乘
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
