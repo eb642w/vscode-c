@@ -1,0 +1,161 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+char in[100];
+int tmp_stack[100], top_1 = -1, top_2 = -1;
+typedef struct calculator_tree
+{
+    int num;
+    struct calculator_tree *lchild;
+    struct calculator_tree *rchild;
+} tree;
+tree *stack[100],*root;
+void visit(tree *p)
+{
+    if(p)
+    {
+        visit(p->lchild);
+        visit(p->rchild);
+        if(p->lchild!=NULL)
+        {
+            switch(p->num)
+            {
+                case '+':
+                    p->num=p->lchild->num+p->rchild->num;
+                    break;
+                case '-':
+                    p->num=p->lchild->num-p->rchild->num;
+                    break;
+                case '*':
+                    p->num=p->lchild->num*p->rchild->num;
+                    break;
+                case '/':
+                    p->num=p->lchild->num/p->rchild->num;
+                    break;
+                default:
+                    printf("error");
+                    break;
+            }
+        }
+    }
+}
+int main()
+{
+    int i;
+    gets(in);
+    for (i = 0; in[i] != '='; i++)
+    {
+        switch (in[i])
+        {
+        case '(':
+            top_1++;
+            tmp_stack[top_1] = '(';
+            break;
+        case ')':
+            for (; tmp_stack[top_1] != '('; top_1--)
+            {
+                top_2--;
+                tree *p = (tree *)malloc(sizeof(tree));
+                p->num = tmp_stack[top_1];
+                p->lchild = stack[top_2];
+                p->rchild = stack[top_2 + 1];
+                stack[top_2] = p;
+            }
+            top_1--;
+            break;
+        case '+':
+            if (top_1!=-1 && tmp_stack[top_1] != '(')
+            {
+                top_2--;
+                tree *p = (tree *)malloc(sizeof(tree));
+                p->num = tmp_stack[top_1];
+                p->lchild = stack[top_2];
+                p->rchild = stack[top_2 + 1];
+                stack[top_2] = p;
+                top_1--;
+            }
+            top_1++;
+            tmp_stack[top_1] = '+';
+            break;
+        case '-':
+            if (top_1!=-1 && tmp_stack[top_1] != '(')
+            {
+                top_2--;
+                tree *p = (tree *)malloc(sizeof(tree));
+                p->num = tmp_stack[top_1];
+                p->lchild = stack[top_2];
+                p->rchild = stack[top_2 + 1];
+                stack[top_2] = p;
+                top_1--;
+            }
+            top_1++;
+            tmp_stack[top_1] = '-';
+            break;
+        case '*':
+            if (tmp_stack[top_1] == '*' || tmp_stack[top_1] == '/')
+            {
+                top_2--;
+                tree *p = (tree *)malloc(sizeof(tree));
+                p->num = tmp_stack[top_1];
+                p->lchild = stack[top_2];
+                p->rchild = stack[top_2 + 1];
+                stack[top_2] = p;
+                top_1--;
+            }
+            top_1++;
+            tmp_stack[top_1] = '*';
+            break;
+        case '/':
+            if (tmp_stack[top_1] == '*' || tmp_stack[top_1] == '/')
+            {
+                top_2--;
+                tree *p = (tree *)malloc(sizeof(tree));
+                p->num = tmp_stack[top_1];
+                p->lchild = stack[top_2];
+                p->rchild = stack[top_2 + 1];
+                stack[top_2] = p;
+                top_1--;
+            }
+            top_1++;
+            tmp_stack[top_1] = '/';
+            break;
+        case ' ':
+            break;
+        default:
+            int tmp = 0, a = 1;
+            for (; in[i] >= '0' && in[i] <= '9'; i++)
+            {
+                tmp = tmp * a + (in[i] - '0');
+                a *= 10;
+            }
+            i--;
+            top_2++;
+            tree *p = (tree *)malloc(sizeof(tree));
+            p->num = tmp;
+            p->lchild = NULL;
+            p->rchild = NULL;
+            stack[top_2] = p;
+            break;
+        }
+    }
+    while (top_1 != -1)
+    {
+        top_2--;
+        tree *p = (tree *)malloc(sizeof(tree));
+        p->num = tmp_stack[top_1];
+        p->lchild = stack[top_2];
+        p->rchild = stack[top_2 + 1];
+        stack[top_2] = p;
+        top_1--;
+    }
+    printf("%c",stack[0]->num);
+    if(stack[0]->lchild!=NULL)
+        printf(" %c",stack[0]->lchild->num);
+    if(stack[0]->rchild!=NULL)
+        printf(" %c",stack[0]->rchild->num);
+    visit(stack[0]);
+    printf("\n%d",stack[0]->num);
+    system("pause");
+    return 0;
+}
