@@ -71,7 +71,7 @@ int main()
         memset(key[i].chr, '\0', sizeof(key[i].chr));
         memset(key[i].code, '\0', sizeof(key[i].code));
     }
-    FILE *in = fopen("input.txt", "r");
+    FILE *in = fopen("input.txt", "rb");
     FILE *output = fopen("output.txt", "w");
     fseek(in, 0, SEEK_END);
     int length = ftell(in);
@@ -81,24 +81,15 @@ int main()
     get[length] = '\0';
     for (i = 0; i < length; i++)
     {
-        if (get[i] == '\n')
+        if (get[i] == '\n' || get[i] == '\r')
             continue;
         note[get[i] - ' ' + 1].num++;
     }
     qsort(note, 96, sizeof(note[0]), cmp);
-    // for(int v=0;v<96;v++)
-    //     printf("%s %d\n",note[v].chr,note[v].num);
-    for (i = 0; note[i].chr[0] != '\0'; i++)
-        ;
-    // printf("**%c %d**\n",note[i].chr,note[i].num);
+    for (i = 0; note[i].chr[0] != '\0'; i++);
     head = &note[i];
     for (j = i; j < 95; j++)
         note[j].link = &note[j + 1];
-    // while(head)
-    // {
-    //     printf("%s %d\n",head->chr,head->num);
-    //     head=head->link;
-    // }
     for (; i < 95; i++)
     {
         nt *v = head->link;
@@ -115,7 +106,6 @@ int main()
         v->link = p;
         head = head->link->link;
     }
-    // qsort(note, 96, sizeof(note[0]), comp);
     visit(&head, "\0");
     for (i = 0; i < 96; i++)
     {
@@ -125,6 +115,8 @@ int main()
     qsort(key, 96, sizeof(key[0]), comp);
     for (i = 0; i <= length; i++)
     {
+        if (get[i] == '\n' || get[i] == '\r')
+            continue;
         int k;
         if (get[i])
             strcat(out, key[get[i] - ' ' + 1].code);

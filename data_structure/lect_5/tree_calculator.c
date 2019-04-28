@@ -10,32 +10,32 @@ typedef struct calculator_tree
     struct calculator_tree *lchild;
     struct calculator_tree *rchild;
 } tree;
-tree *stack[100],*root;
+tree *stack[100], *root;
 void visit(tree *p)
 {
-    if(p)
+    if (p)
     {
         visit(p->lchild);
         visit(p->rchild);
-        if(p->lchild!=NULL)
+        if (p->lchild != NULL)
         {
-            switch(p->num)
+            switch (p->num)
             {
-                case '+':
-                    p->num=p->lchild->num+p->rchild->num;
-                    break;
-                case '-':
-                    p->num=p->lchild->num-p->rchild->num;
-                    break;
-                case '*':
-                    p->num=p->lchild->num*p->rchild->num;
-                    break;
-                case '/':
-                    p->num=p->lchild->num/p->rchild->num;
-                    break;
-                default:
-                    printf("error");
-                    break;
+            case '+':
+                p->num = p->lchild->num + p->rchild->num;
+                break;
+            case '-':
+                p->num = p->lchild->num - p->rchild->num;
+                break;
+            case '*':
+                p->num = p->lchild->num * p->rchild->num;
+                break;
+            case '/':
+                p->num = p->lchild->num / p->rchild->num;
+                break;
+            default:
+                printf("error");
+                break;
             }
         }
     }
@@ -49,10 +49,13 @@ int main()
         switch (in[i])
         {
         case '(':
+        {
             top_1++;
             tmp_stack[top_1] = '(';
-            break;
+        }
+        break;
         case ')':
+        {
             for (; tmp_stack[top_1] != '('; top_1--)
             {
                 top_2--;
@@ -63,9 +66,11 @@ int main()
                 stack[top_2] = p;
             }
             top_1--;
-            break;
+        }
+        break;
         case '+':
-            if (top_1!=-1 && tmp_stack[top_1] != '(')
+        {
+            if (top_1 != -1 && tmp_stack[top_1] != '(')
             {
                 top_2--;
                 tree *p = (tree *)malloc(sizeof(tree));
@@ -77,9 +82,11 @@ int main()
             }
             top_1++;
             tmp_stack[top_1] = '+';
-            break;
+        }
+        break;
         case '-':
-            if (top_1!=-1 && tmp_stack[top_1] != '(')
+        {
+            if (top_1 != -1 && tmp_stack[top_1] != '(')
             {
                 top_2--;
                 tree *p = (tree *)malloc(sizeof(tree));
@@ -91,8 +98,10 @@ int main()
             }
             top_1++;
             tmp_stack[top_1] = '-';
-            break;
+        }
+        break;
         case '*':
+        {
             if (tmp_stack[top_1] == '*' || tmp_stack[top_1] == '/')
             {
                 top_2--;
@@ -105,8 +114,10 @@ int main()
             }
             top_1++;
             tmp_stack[top_1] = '*';
-            break;
+        }
+        break;
         case '/':
+        {
             if (tmp_stack[top_1] == '*' || tmp_stack[top_1] == '/')
             {
                 top_2--;
@@ -119,24 +130,27 @@ int main()
             }
             top_1++;
             tmp_stack[top_1] = '/';
-            break;
+        }
+        break;
         case ' ':
             break;
         default:
-            int tmp = 0, a = 1;
+        {
+            int temp = 0, aa = 1;
             for (; in[i] >= '0' && in[i] <= '9'; i++)
             {
-                tmp = tmp * a + (in[i] - '0');
-                a *= 10;
+                temp = temp * aa + (in[i] - '0');
+                aa *= 10;
             }
             i--;
             top_2++;
             tree *p = (tree *)malloc(sizeof(tree));
-            p->num = tmp;
+            p->num = temp;
             p->lchild = NULL;
             p->rchild = NULL;
             stack[top_2] = p;
-            break;
+        }
+        break;
         }
     }
     while (top_1 != -1)
@@ -149,13 +163,26 @@ int main()
         stack[top_2] = p;
         top_1--;
     }
-    printf("%c",stack[0]->num);
-    if(stack[0]->lchild!=NULL)
-        printf(" %c",stack[0]->lchild->num);
-    if(stack[0]->rchild!=NULL)
-        printf(" %c",stack[0]->rchild->num);
+    if (stack[0]->lchild)
+        printf("%c", stack[0]->num);
+    else
+        printf("%d", stack[0]->num);
+    if (stack[0]->lchild != NULL)
+    {
+        if (stack[0]->lchild->lchild)
+            printf(" %c", stack[0]->lchild->num);
+        else
+            printf(" %d", stack[0]->lchild->num);
+    }
+    if (stack[0]->rchild != NULL)
+    {
+        if (stack[0]->rchild->rchild)
+            printf(" %c", stack[0]->rchild->num);
+        else
+            printf(" %d", stack[0]->rchild->num);
+    }
     visit(stack[0]);
-    printf("\n%d",stack[0]->num);
+    printf("\n%d", stack[0]->num);
     system("pause");
     return 0;
 }
