@@ -43,7 +43,7 @@ void visit(tree *p)
 int main()
 {
     int i;
-    gets(in);
+    fgets(in,100,stdin);
     for (i = 0; in[i] != '='; i++)
     {
         switch (in[i])

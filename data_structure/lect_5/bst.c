@@ -22,8 +22,8 @@ void insert(int in)
         now=root;
         return;
     }
-    tree *tmp;
-    int sign,count=1;
+    tree *tmp=NULL;
+    int sign=0,count=1;
     while(now)
     {
         tmp=now;
