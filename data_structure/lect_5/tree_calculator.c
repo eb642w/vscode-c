@@ -43,7 +43,7 @@ void visit(tree *p)
 int main()
 {
     int i;
-    fgets(in,100,stdin);
+    fgets(in, 100, stdin);
     for (i = 0; in[i] != '='; i++)
     {
         switch (in[i])
@@ -136,12 +136,9 @@ int main()
             break;
         default:
         {
-            int temp = 0, aa = 1;
-            for (; in[i] >= '0' && in[i] <= '9'; i++)
-            {
+            int temp = in[i] - '0', aa = 10;
+            for (i = i + 1; in[i] >= '0' && in[i] <= '9'; i++)
                 temp = temp * aa + (in[i] - '0');
-                aa *= 10;
-            }
             i--;
             top_2++;
             tree *p = (tree *)malloc(sizeof(tree));
@@ -182,7 +179,7 @@ int main()
             printf(" %d", stack[0]->rchild->num);
     }
     visit(stack[0]);
-    printf("\n%d", stack[0]->num);
+    printf("\n%d\n", stack[0]->num);
     system("pause");
     return 0;
 }
